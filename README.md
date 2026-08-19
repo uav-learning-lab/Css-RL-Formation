@@ -91,9 +91,6 @@ STAGE_GUI=true \
 xhost -local:docker
 ```
 
-See [docker/README.md](docker/README.md) for CPU and optional CUDA build
-options.
-
 ## Runtime checks
 
 Open another terminal while the experiment is running:
@@ -152,11 +149,4 @@ Checkpoint SHA-256:
 ```
 
 The public CPU environment uses Python 3.8, PyTorch 2.0.1, NumPy 1.24.4,
-SciPy 1.10.1, ROS Noetic, and Stage 4.3. Additional scene and node details are
-available in [docs/STAGE_VALIDATION.md](docs/STAGE_VALIDATION.md).
-
-## License
-
-The original Css-RL-Formation project code is released under the MIT License.
-See [LICENSE](LICENSE). Bundled third-party components retain their respective
-licenses and notices; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+SciPy 1.10.1, ROS Noetic, and Stage 4.3. 
