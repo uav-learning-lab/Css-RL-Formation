@@ -1,0 +1,24 @@
+# Css-RL-Formation dense-scenario reproduction configuration.
+# Control and policy parameters are copied from the original experiment.
+UAV_config:
+  ID: 1
+  takeoff_height: 6
+
+formation_config:
+  nums: 4
+  task_type: "formation_two"
+  dir: "-y-axis"
+  angle: 25
+  # World-frame initial positions: top, right, bottom, left.
+  bias:
+    - [0.0, 4.242]
+    - [4.242, 0.0]
+    - [0.0, -4.242]
+    - [-4.242, 0.0]
+  formation_scene: "Dense"
+  sim_type: "RL_Formation"
+
+PD:
+  Kp: 1
+  Kd: 0.2
+  dt: 0.1

@@ -1,0 +1,42 @@
+<launch>
+    <arg name="gui" default="true"/>
+    <arg name="run_algorithm" default="true"/>
+    <arg name="goal_x" default="44.0"/>
+    <arg name="goal_y" default="1.0"/>
+    <arg name="results_root" default="$(env HOME)/.ros/distributed_rl_formation_results"/>
+    <arg name="world_file" default="$(find distributed_rl_formation)/worlds/dense_css_rl_formation_stage.world"/>
+    <arg name="config_file" default="$(find distributed_rl_formation)/config/dense_experiment.yaml"/>
+    <arg name="virtual_config_file" default="$(find distributed_rl_formation)/config/dense_experiment_virtual.yaml"/>
+
+    <include if="$(arg gui)" file="$(find distributed_rl_formation)/launch/stage_backend.launch">
+        <arg name="world_file" value="$(arg world_file)"/>
+        <arg name="stage_flags" value=""/>
+    </include>
+    <include unless="$(arg gui)" file="$(find distributed_rl_formation)/launch/stage_backend.launch">
+        <arg name="world_file" value="$(arg world_file)"/>
+        <arg name="stage_flags" value="-g"/>
+    </include>
+
+    <node name="dense_stage_pose_bridge" pkg="distributed_rl_formation"
+          type="stage_pose_bridge.py" output="screen">
+        <param name="config_file" value="$(arg config_file)"/>
+    </node>
+
+    <group if="$(arg run_algorithm)">
+        <include file="$(find distributed_rl_formation)/launch/CBAA.launch">
+            <arg name="config_file" value="$(arg config_file)"/>
+            <arg name="virtual_config_file" value="$(arg virtual_config_file)"/>
+            <arg name="use_gazebo_visualizer" value="false"/>
+        </include>
+        <include file="$(find distributed_rl_formation)/launch/distributed_rl_formation.launch">
+            <arg name="config_file" value="$(arg config_file)"/>
+            <arg name="policy_path" value="$(find distributed_rl_formation)/src/policy"/>
+            <arg name="results_root" value="$(arg results_root)"/>
+        </include>
+        <node name="dense_experiment_goal" pkg="distributed_rl_formation"
+              type="publish_experiment_goal.py" output="screen">
+            <param name="x" value="$(arg goal_x)"/>
+            <param name="y" value="$(arg goal_y)"/>
+        </node>
+    </group>
+</launch>

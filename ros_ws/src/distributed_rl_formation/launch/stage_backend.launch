@@ -1,0 +1,19 @@
+<launch>
+    <arg name="world_file"/>
+    <arg name="stage_flags" default=""/>
+
+    <node name="stageros_dense" pkg="stage_ros_add_pose_and_crash" type="stageros"
+          args="$(arg stage_flags) $(arg world_file)" output="screen" required="true">
+        <!-- The algorithm already publishes body-frame Twist commands. -->
+        <remap from="/robot_0/cmd_vel" to="/iris_0/coll_avoid/cmd_vel_flu"/>
+        <remap from="/robot_1/cmd_vel" to="/iris_1/coll_avoid/cmd_vel_flu"/>
+        <remap from="/robot_2/cmd_vel" to="/iris_2/coll_avoid/cmd_vel_flu"/>
+        <remap from="/robot_3/cmd_vel" to="/iris_3/coll_avoid/cmd_vel_flu"/>
+
+        <!-- Preserve the LaserScan interfaces expected by the trained policy. -->
+        <remap from="/robot_0/base_scan" to="/iris_0/scan"/>
+        <remap from="/robot_1/base_scan" to="/iris_1/scan"/>
+        <remap from="/robot_2/base_scan" to="/iris_2/scan"/>
+        <remap from="/robot_3/base_scan" to="/iris_3/scan"/>
+    </node>
+</launch>

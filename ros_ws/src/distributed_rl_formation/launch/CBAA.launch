@@ -1,0 +1,18 @@
+<launch>
+    <arg name="config_file" default="$(find distributed_rl_formation)/config/dense_experiment.yaml"/>
+    <arg name="virtual_config_file" default="$(find distributed_rl_formation)/config/dense_experiment_virtual.yaml"/>
+    <arg name="use_gazebo_visualizer" default="true"/>
+
+    <node if="$(arg use_gazebo_visualizer)" name="comm_aggregation" pkg="distributed_rl_formation" type="comm_aggregation.py" output="screen">
+        <param name="config_file" value="$(arg config_file)"/>
+    </node>
+
+    <node name="uav_assignment_0" pkg="distributed_rl_formation" type="dis_align.py" args="0" output="screen"><param name="config_file" value="$(arg config_file)"/></node>
+    <node name="uav_assignment_1" pkg="distributed_rl_formation" type="dis_align.py" args="1" output="screen"><param name="config_file" value="$(arg config_file)"/></node>
+    <node name="uav_assignment_2" pkg="distributed_rl_formation" type="dis_align.py" args="2" output="screen"><param name="config_file" value="$(arg config_file)"/></node>
+    <node name="uav_assignment_3" pkg="distributed_rl_formation" type="dis_align.py" args="3" output="screen"><param name="config_file" value="$(arg config_file)"/></node>
+
+    <node name="Consistent_formations" pkg="distributed_rl_formation" type="Consistent_formations.py" output="screen">
+        <param name="config_file" value="$(arg virtual_config_file)"/>
+    </node>
+</launch>

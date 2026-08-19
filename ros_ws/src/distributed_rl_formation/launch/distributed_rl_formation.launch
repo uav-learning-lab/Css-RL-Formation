@@ -1,0 +1,26 @@
+<launch>
+    <arg name="config_file" default="$(find distributed_rl_formation)/config/dense_experiment.yaml"/>
+    <arg name="policy_path" default="$(find distributed_rl_formation)/src/policy"/>
+    <arg name="results_root" default="$(env HOME)/.ros/distributed_rl_formation_results"/>
+
+    <node name="aff_rl_control_0" pkg="distributed_rl_formation" type="dis_formation_control.py" args="iris 0" output="screen">
+        <param name="config_file" value="$(arg config_file)"/>
+        <param name="policy_path" value="$(arg policy_path)"/>
+        <param name="results_root" value="$(arg results_root)"/>
+    </node>
+    <node name="aff_rl_control_1" pkg="distributed_rl_formation" type="dis_formation_control.py" args="iris 1" output="screen">
+        <param name="config_file" value="$(arg config_file)"/>
+        <param name="policy_path" value="$(arg policy_path)"/>
+        <param name="results_root" value="$(arg results_root)"/>
+    </node>
+    <node name="aff_rl_control_2" pkg="distributed_rl_formation" type="dis_formation_control.py" args="iris 2" output="screen">
+        <param name="config_file" value="$(arg config_file)"/>
+        <param name="policy_path" value="$(arg policy_path)"/>
+        <param name="results_root" value="$(arg results_root)"/>
+    </node>
+    <node name="aff_rl_control_3" pkg="distributed_rl_formation" type="dis_formation_control.py" args="iris 3" output="screen">
+        <param name="config_file" value="$(arg config_file)"/>
+        <param name="policy_path" value="$(arg policy_path)"/>
+        <param name="results_root" value="$(arg results_root)"/>
+    </node>
+</launch>

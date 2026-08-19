@@ -1,0 +1,133 @@
+# Stage 4.3 world for the Css-RL-Formation dense-scenario validation.
+#
+# The 33 obstacle centres were calibrated from the plot rectangle:
+# pixels (50,35)..(2583,839) -> world x=-10..50, y=10..-10.
+
+show_clock 0
+show_clock_interval 10000
+resolution 0.02
+threads 4
+speedup 1.0
+
+define dense_laser ranger
+(
+  sensor(
+    pose [0 0 0.10 0]
+    fov 270
+    range [0.00 5.00]
+    samples 512
+  )
+  color "blue"
+)
+
+define formation_robot position
+(
+  size [0.40 0.32 0.25]
+  localization "gps"
+  origin [0 0 0 0]
+  gui_nose 1
+  drive "diff"
+  obstacle_return 1
+  ranger_return 0.5
+  fiducial_return 1
+  dense_laser(pose [0 0 0 0])
+)
+
+# A twelve-sided 0.85 m obstacle keeps the scene dense while leaving enough
+# clearance for the four-robot formation in Stage.
+define dense_obstacle model
+(
+  size [0.85 0.85 0.80]
+  color "black"
+  gui_nose 0
+  obstacle_return 1
+  ranger_return 1
+  block(
+    points 12
+    point[0]  [1.000 0.500]
+    point[1]  [0.933 0.750]
+    point[2]  [0.750 0.933]
+    point[3]  [0.500 1.000]
+    point[4]  [0.250 0.933]
+    point[5]  [0.067 0.750]
+    point[6]  [0.000 0.500]
+    point[7]  [0.067 0.250]
+    point[8]  [0.250 0.067]
+    point[9]  [0.500 0.000]
+    point[10] [0.750 0.067]
+    point[11] [0.933 0.250]
+    z [0 1]
+  )
+)
+
+define target_marker model
+(
+  size [0.20 0.20 0.05]
+  color "yellow"
+  gui_nose 0
+  obstacle_return 0
+  ranger_return 0
+)
+
+window
+(
+  size [1300 520]
+  scale 20
+  center [20 0]
+  rotate [0 0]
+  show_data 1
+  show_flags 1
+  show_blocks 1
+  show_clock 1
+  show_footprints 1
+  show_grid 1
+  show_trailarrows 1
+  show_trailrise 0
+  show_trailfast 0
+  show_occupancy 0
+)
+
+# Visual-only centre target. It does not collide and is invisible to lidar.
+target_marker(pose [44.000 1.000 0.000 0.000])
+
+# Obstacles, ordered by x then y.
+dense_obstacle(pose [12.113  2.224 0 0])
+dense_obstacle(pose [12.168 -1.896 0 0])
+dense_obstacle(pose [12.587  5.543 0 0])
+dense_obstacle(pose [12.605 -4.841 0 0])
+dense_obstacle(pose [14.391  0.143 0 0])
+dense_obstacle(pose [15.156  3.633 0 0])
+dense_obstacle(pose [15.900 -5.554 0 0])
+dense_obstacle(pose [16.487 -2.642 0 0])
+dense_obstacle(pose [17.467  6.238 0 0])
+dense_obstacle(pose [17.876  1.813 0 0])
+dense_obstacle(pose [19.729 -5.655 0 0])
+dense_obstacle(pose [20.124 -0.478 0 0])
+dense_obstacle(pose [20.485  3.995 0 0])
+dense_obstacle(pose [22.651  6.432 0 0])
+dense_obstacle(pose [23.127 -3.730 0 0])
+dense_obstacle(pose [23.495  0.115 0 0])
+dense_obstacle(pose [24.131  3.299 0 0])
+dense_obstacle(pose [25.591 -5.446 0 0])
+dense_obstacle(pose [26.034  6.087 0 0])
+dense_obstacle(pose [26.265 -1.391 0 0])
+dense_obstacle(pose [27.575  0.908 0 0])
+dense_obstacle(pose [28.068  3.982 0 0])
+dense_obstacle(pose [28.596 -5.148 0 0])
+dense_obstacle(pose [29.310 -2.143 0 0])
+dense_obstacle(pose [30.045  6.772 0 0])
+dense_obstacle(pose [30.811  1.066 0 0])
+dense_obstacle(pose [32.217  4.627 0 0])
+dense_obstacle(pose [32.651 -3.424 0 0])
+dense_obstacle(pose [34.872  6.073 0 0])
+dense_obstacle(pose [35.026  1.197 0 0])
+dense_obstacle(pose [35.100 -1.726 0 0])
+dense_obstacle(pose [35.932 -5.318 0 0])
+dense_obstacle(pose [36.800  3.611 0 0])
+
+# Four robots: top, right, bottom and left. The declaration order determines
+# the stage_ros topic namespaces /robot_0 through /robot_3.
+formation_robot(pose [ 0.000  4.242 0 0] color "blue")
+formation_robot(pose [ 4.242  0.000 0 0] color "green")
+formation_robot(pose [ 0.000 -4.242 0 0] color "red")
+formation_robot(pose [-4.242  0.000 0 0] color "cyan")
