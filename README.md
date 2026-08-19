@@ -3,7 +3,7 @@
 This repository contains the official implementation of our paper, which addresses the coordinated formation maintenance and obstacle avoidance problem for multi-UAV systems in unknown environments. We propose an adaptive formation control approach named Css-RL-Formation, combining deep reinforcement learning (DRL) and consensus theory. The developed framework adopts a distributed position-assignment module for dynamic target allocation, and constructs a hybrid controller integrating a DRL-based control module and a consensus control module. A threat-aware nonlinear fusion mechanism is further designed to merge control outputs according to real-time obstacle clearance measurements.
 
 This repository provides the ROS Stage validation environment, controller
-source code, pretrained checkpoint, experiment launcher, and data recorder used to reproduce experiments. 
+source code, pretrained checkpoint, experiment launcher, and data recorder used to reproduce experiments. The demonstration video is publicly available at https://www.bilibili.com/video/BV1Kv876MESi/
 
 ## Reproduced experiment
 
